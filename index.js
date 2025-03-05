@@ -65,6 +65,7 @@ function vytvorHrdinu(){
         trida: trida
     };
     //Maksik smrdi
+    // Dik, ty taky
     
     // ulozeni do pameti prohlizece
     localStorage.setItem('hrdina', JSON.stringify(hrdina));
