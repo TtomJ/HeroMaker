@@ -64,6 +64,7 @@ function vytvorHrdinu(){
         level: level,
         trida: trida
     };
+    //Maksik smrdi
     
     // ulozeni do pameti prohlizece
     localStorage.setItem('hrdina', JSON.stringify(hrdina));
