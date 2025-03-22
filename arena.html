@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-<body id="heroPageBody">
+<body id="arenaPageBody" onload="LoadHero(), LoadMonster()">
     <nav id="navPanel">
         <div id="navPanelContent">
             <a href="index.html">Hero</a>
@@ -18,22 +18,17 @@
         </div>
     </nav>
     <div style="text-align: center;">
-        <h1 id="headLine">Hero Maker</h1>
+        <h1 id="headLine">Arena</h1>
     </div>
-    <form method="dialog" style="display: flex; flex-direction: column; width: 50%; margin: 0 auto;">
-        <label for="heroName">Name</label>
-        <input type="text" id="heroName" name="heroName">
-        <label for="heroLevel">Level</label>
-        <input type="number" id="heroLevel" name="heroLevel">
-        <label for="heroClass">Class</label>
-        <select id="heroClass" name="heroClass">
-            <option value="warrior">Warrior</option>
-            <option value="mage">Mage</option>
-            <option value="rogue">Rogue</option>
-        </select>
-        <input type="button" value="Create Hero" onclick="CreateHero()">
-    </form>
-    <div id="heroCardContainer"></div>
+    <div id="arenaContainer">
+        <div id="heroCardContainer"></div>
+        <div id="monsterCardContainer"></div>
+    </div>
+    <div id="fightButtonDiv">
+    <input style="background-color: green;" class="fightButton" type="button" value="Fight!" onclick="FightHero()">
+    <input style="background-color: red;" class="fightButton" type="button" value="Fight!" onclick="FightMonster()">
+    </div>
+    <script type="module" src="monster.js"></script>
     <script type="module" src="hero.js"></script>
     <script type="module" src="index.js"></script>
 </body>
