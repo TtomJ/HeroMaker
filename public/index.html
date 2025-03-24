@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body id="heroPageBody">
+    <nav id="navPanel">
+        <div id="navPanelContent">
+            <a href="index.html">Hero</a>
+            <a href="monster.html">Monster</a>
+            <a href="arena.html">Arena</a>
+        </div>
+    </nav>
+    <div style="text-align: center;">
+        <h1 id="headLine">Hero Maker</h1>
+    </div>
+    <form method="dialog" style="display: flex; flex-direction: column; width: 50%; margin: 0 auto;">
+        <label for="heroName">Name</label>
+        <input class="input" type="text" id="heroName" name="heroName">
+        <label for="heroLevel">Level</label>
+        <input class="input" type="number" id="heroLevel" name="heroLevel">
+        <label for="heroClass">Class</label>
+        <select class="input" id="heroClass" name="heroClass">
+            <option value="warrior">Warrior</option>
+            <option value="mage">Mage</option>
+            <option value="rogue">Rogue</option>
+        </select>
+        <input class="input" type="button" value="Create Hero" onclick="CreateHero()">
+    </form>
+    <div id="heroCardContainer"></div>
+    <script type="module" src="hero.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+</html>

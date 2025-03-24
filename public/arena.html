@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body id="arenaPageBody" onload="LoadHero(), LoadMonster()">
+    <nav id="navPanel">
+        <div id="navPanelContent">
+            <a href="index.html">Hero</a>
+            <a href="monster.html">Monster</a>
+            <a href="arena.html">Arena</a>
+        </div>
+    </nav>
+    <div style="text-align: center;">
+        <h1 id="headLine">Arena</h1>
+    </div>
+    <div id="arenaContainer">
+        <div id="heroCardContainer"></div>
+        <div id="monsterCardContainer"></div>
+    </div>
+    <div id="fightButtonDiv">
+        <div id="heroButtonBackground" class="fightButtonBackground">
+            <input style="background-color: green;" class="fightButton"     type="button" value="Fight!" onclick="HeroAttack()">
+        </div>
+        <div id="monsterButtonBackground" class="fightButtonBackground"> 
+            <input id="fightButton" style="background-color: red;" class="fightButton" type="button" value="Fight!" onclick="MonsterAttack()">
+        </div>
+    </div>
+    <script type="module" src="monster.js"></script>
+    <script type="module" src="hero.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
