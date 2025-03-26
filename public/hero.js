@@ -8,15 +8,7 @@ class Hero {
       this.xp = Number(level * 20);
       this.hp = Number(level * 10);
     }
-  
-    // Method to print hero info
-    printInfo() {
-      console.log(
-        `Hero: ${this.name}, level: ${this.level}, class: ${this.trida}, attack: ${this.attack}, defense: ${this.defense}, xp: ${this.xp}, hp: ${this.hp}`
-      );
-    }
-  
-    // from JSON to hero instance
+    // When converting a class instance into JSON it only captures object data and not methods and prototype
     static fromJSON(data) {
       const hero = new Hero(data.name, data.level, data.trida);
       Object.assign(hero, data);

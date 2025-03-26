@@ -1,274 +1,141 @@
 import Hero from './hero.js';
 import Monster from './monster.js';
 
+function createElem(type, parent, options = {}) {
+  const elem = document.createElement(type);
+  if (options.id) elem.id = options.id;
+  if (options.className) elem.className = options.className;
+  if (options.innerHTML) elem.innerHTML = options.innerHTML;
+  parent && parent.appendChild(elem);
+  return elem;
+}
+
+function ValidateInputs(name, level, trida) {
+  if (name === '' || level === '' || trida === '') {
+    alert('Please fill all fields');
+    return false;
+  }
+  if (isNaN(level)) {
+    alert('Level must be a number');
+    return false;
+  }
+  return true;
+}
+
 function CreateHero() {
   const heroName = document.getElementById('heroName').value;
   const heroLevel = document.getElementById('heroLevel').value;
   const heroClass = document.getElementById('heroClass').value;
-  console.log(heroName, heroLevel, heroClass);
-  const hero = new Hero(heroName, heroLevel, heroClass);
-
-  if (heroName === '' || heroLevel === '' || heroClass === '') {
-    alert('Please fill all fields');
-    return;
-  }
-  if (isNaN(heroLevel)) {
-    alert('Level must be a number');
-    return;
-  }
-
+  if (!ValidateInputs(heroName, heroLevel, heroClass)) return;
+  
+  const hero = new Hero(heroName, heroLevel, heroClass) ;
+  
   const heroCardContainer = document.getElementById('heroCardContainer');
-  const heroCard = heroCardContainer.appendChild(document.createElement('div'));
-  heroCard.id = 'heroCard';
-
-  const heroCardImg = heroCard.appendChild(document.createElement('img'));
-  if (heroClass === 'warrior'){
-    heroCardImg.src = 'images/Warrior.png';
-  } else if (heroClass === 'mage'){
-    heroCardImg.src = 'images/Mage.png';
-  } else if (heroClass === 'rogue'){
-    heroCardImg.src = 'images/Rogue.png';
-  }
-
-  const heroInfoDiv = heroCard.appendChild(document.createElement('div'));
-  heroInfoDiv.id = 'heroInfoDiv';
-
-  const heroCardName = heroInfoDiv.appendChild(document.createElement('h2'));
-  heroCardName.innerHTML = `${hero.name}`;
-  const heroCardLevel = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardLevel.innerHTML = `Level: ${hero.level}`;
-  const heroCardClassElem = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardClassElem.innerHTML = `Class: ${hero.trida}`;
-  const heroCardAttack = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardAttack.innerHTML = `Attack: ${hero.attack}`;
-  const heroCardDefense = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardDefense.innerHTML = `Defense: ${hero.defense}`;
-  const heroCardXp = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardXp.innerHTML = `XP: ${hero.xp}`;
-  const heroCardHp = heroInfoDiv.appendChild(document.createElement('p'));
-  heroCardHp.innerHTML = `HP: ${hero.hp}`;
-
-  heroCardImg.id = 'heroImg';
-  heroCardName.className = 'heroInfo';
-  heroCardLevel.className = 'heroInfo';
-  heroCardClassElem.className = 'heroInfo';
-  heroCardAttack.className = 'heroInfo';
-  heroCardDefense.className = 'heroInfo';
-  heroCardXp.className = 'heroInfo';
-  heroCardHp.className = 'heroInfo';
-
-  // Save hero to localStorage
+  const heroCard = createElem('div', heroCardContainer, { id: 'heroCard' });
+  
+  const heroCardImg = createElem('img', heroCard, { id: 'heroImg' });
+  const imgSources = {
+    warrior: 'images/Warrior.png',
+    mage: 'images/Mage.png',
+    rogue: 'images/Rogue.png'
+  };
+  heroCardImg.src = imgSources[heroClass];
+  hero.image = imgSources[heroClass];
+  
+  const heroInfoDiv = createElem('div', heroCard, { id: 'heroInfoDiv' });
+  createElem('h2', heroInfoDiv, { innerHTML: hero.name, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `Level: ${hero.level}`, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `Class: ${hero.trida}`, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `Attack: ${hero.attack}`, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `Defense: ${hero.defense}`, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `XP: ${hero.xp}`, className: 'heroInfo' });
+  createElem('p', heroInfoDiv, { innerHTML: `HP: ${hero.hp}`, className: 'heroInfo' });
+  
   localStorage.setItem('hero', JSON.stringify(hero));
+  console.log(hero);
 }
 
 function CreateMonster() {
   const monsterName = document.getElementById('monsterName').value;
   const monsterLevel = document.getElementById('monsterLevel').value;
   const monsterClass = document.getElementById('monsterClass').value;
-  console.log(monsterName, monsterLevel, monsterClass);
+  if (!ValidateInputs(monsterName, monsterLevel, monsterClass)) return;
+
+  
   const monster = new Monster(monsterName, monsterLevel, monsterClass);
-
-  if (monsterName === '' || monsterLevel === '' || monsterClass === '') {
-    alert('Please fill all fields');
-    return;
-  }
-  if (isNaN(monsterLevel)) {
-    alert('Level must be a number');
-    return;
-  }
-
+  
   const monsterCardContainer = document.getElementById('monsterCardContainer');
-  const monsterCard = monsterCardContainer.appendChild(document.createElement('div'));
-  monsterCard.id = 'monsterCard';
-
-  const monsterCardImg = monsterCard.appendChild(document.createElement('img'));
-  if (monsterClass === 'goblin'){
-    monsterCardImg.src = 'images/Goblin.png';
-  } else if (monsterClass === 'zombie'){
-    monsterCardImg.src = 'images/Zombie.png';
-  } else if (monsterClass === 'dragon'){
-    monsterCardImg.src = 'images/Dragon.png';
-  }
-
-  const monsterInfoDiv = monsterCard.appendChild(document.createElement('div'));
-  monsterInfoDiv.id = 'monsterInfoDiv';
-
-  const monsterCardName = monsterInfoDiv.appendChild(document.createElement('h2'));
-  monsterCardName.innerHTML = `${monster.name}`;
-  const monsterCardLevel = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardLevel.innerHTML = `Level: ${monster.level}`;
-  const monsterCardClassElem = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardClassElem.innerHTML = `Class: ${monster.trida}`;
-  const monsterCardAttack = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardAttack.innerHTML = `Attack: ${monster.attack}`;
-  const monsterCardDefense = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardDefense.innerHTML = `Defense: ${monster.defense}`;
-  const monsterCardXp = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardXp.innerHTML = `XP: ${monster.xp}`;
-  const monsterCardHp = monsterInfoDiv.appendChild(document.createElement('p'));
-  monsterCardHp.innerHTML = `HP: ${monster.hp}`;
-
-  monsterCardImg.id = 'monsterImg';
-  monsterCardName.className = 'monsterInfo';
-  monsterCardLevel.className = 'monsterInfo';
-  monsterCardClassElem.className = 'monsterInfo';
-  monsterCardAttack.className = 'monsterInfo';
-  monsterCardDefense.className = 'monsterInfo';
-  monsterCardXp.className = 'monsterInfo';
-  monsterCardHp.className = 'monsterInfo';
-
-  // Save monster to localStorage
+  const monsterCard = createElem('div', monsterCardContainer, { id: 'monsterCard' });
+  
+  const monsterCardImg = createElem('img', monsterCard, { id: 'monsterImg' });
+  const imgSources = {
+    goblin: 'images/Goblin.png',
+    zombie: 'images/Zombie.png',
+    dragon: 'images/Dragon.png'
+  };
+  monsterCardImg.src = imgSources[monsterClass];
+  monster.image = imgSources[monsterClass]; // Fixed typo: image not imgage
+  
+  const monsterInfoDiv = createElem('div', monsterCard, { id: 'monsterInfoDiv' });
+  createElem('h2', monsterInfoDiv, { innerHTML: `Name: ${monster.name}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `Level: ${monster.level}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `Class: ${monster.trida}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `Attack: ${monster.attack}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `Defense: ${monster.defense}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `XP: ${monster.xp}`, className: 'monsterInfo' });
+  createElem('p', monsterInfoDiv, { innerHTML: `HP: ${monster.hp}`, className: 'monsterInfo' });
+  
   localStorage.setItem('monster', JSON.stringify(monster));
 }
 
 function LoadHero() {
-  // Retrieve hero data from localStorage
   const heroData = JSON.parse(localStorage.getItem('hero'));
-  
-  // Get the container where the hero card should be displayed
   const heroCardContainer = document.getElementById('heroCardContainer');
-  
-  // Clear any previous content in the container
   heroCardContainer.innerHTML = '';
 
-  // Check if heroData exists
   if (heroData) {
-    // Convert the data into a Hero instance and print info to the console
     const savedHero = Hero.fromJSON(heroData);
-    savedHero.printInfo();
+    const heroCard = createElem('div', heroCardContainer, { id: 'heroCard' });
+    const heroCardImg = createElem('img', heroCard, { id: 'heroImg' });
+    heroCardImg.src = savedHero.image; // Use stored image URL
 
-    // Create the hero card element
-    const heroCard = heroCardContainer.appendChild(document.createElement('div'));
-    heroCard.id = 'heroCard';
-
-    // Create and set up the image element for the hero
-    const heroCardImg = heroCard.appendChild(document.createElement('img'));
-    if (savedHero.trida === 'warrior'){
-      heroCardImg.src = 'images/Warrior.png';
-    } else if (savedHero.trida === 'mage'){
-      heroCardImg.src = 'images/Mage.png';
-    } else if (savedHero.trida === 'rogue'){
-      heroCardImg.src = 'images/Rogue.png';
-    }
-    heroCardImg.id = 'heroImg';
-
-    // Create a container for the hero info
-    const heroInfoDiv = heroCard.appendChild(document.createElement('div'));
-    heroInfoDiv.id = 'heroInfoDiv';
-
-    // Append each piece of hero information
-    const heroCardName = heroInfoDiv.appendChild(document.createElement('h2'));
-    heroCardName.innerHTML = savedHero.name;
-    heroCardName.className = 'heroInfo';
-
-    const heroCardLevel = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardLevel.innerHTML = `Level: ${savedHero.level}`;
-    heroCardLevel.className = 'heroInfo';
-
-    const heroCardClassElem = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardClassElem.innerHTML = `Class: ${savedHero.trida}`;
-    heroCardClassElem.className = 'heroInfo';
-
-    const heroCardAttack = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardAttack.innerHTML = `Attack: ${savedHero.attack}`;
-    heroCardAttack.className = 'heroInfo';
-
-    const heroCardDefense = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardDefense.innerHTML = `Defense: ${savedHero.defense}`;
-    heroCardDefense.className = 'heroInfo';
-
-    const heroCardXp = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardXp.innerHTML = `XP: ${savedHero.xp}`;
-    heroCardXp.className = 'heroInfo';
-
-    const heroCardHp = heroInfoDiv.appendChild(document.createElement('p'));
-    heroCardHp.innerHTML = `HP: ${savedHero.hp}`;
-    heroCardHp.className = 'heroInfo';
+    const heroInfoDiv = createElem('div', heroCard, { id: 'heroInfoDiv' });
+    createElem('h2', heroInfoDiv, { innerHTML: savedHero.name, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `Level: ${savedHero.level}`, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `Class: ${savedHero.trida}`, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `Attack: ${savedHero.attack}`, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `Defense: ${savedHero.defense}`, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `XP: ${savedHero.xp}`, className: 'heroInfo' });
+    createElem('p', heroInfoDiv, { innerHTML: `HP: ${savedHero.hp}`, className: 'heroInfo' });
   } else {
-    // If there is no hero data, display a message in the hero card container
-    const errorMessage = document.createElement('h1');
-    errorMessage.className = 'errorMessage';
-    errorMessage.innerHTML = 'No hero found. Please create a hero first.';
-    heroCardContainer.appendChild(errorMessage);
-    // Style the hero card container
+    const errorMessage = createElem('h1', heroCardContainer, { innerHTML: 'No hero found. Please create a hero first.', className: 'errorMessage' });
     heroCardContainer.style.display = 'flex';
     heroCardContainer.style.justifyContent = 'center';
     heroCardContainer.style.alignItems = 'center';
   }
 }
 
-
 function LoadMonster() {
-  // Retrieve monster data from localStorage
   const monsterData = JSON.parse(localStorage.getItem('monster'));
-  
-  // Get the container where the monster card should be displayed
   const monsterCardContainer = document.getElementById('monsterCardContainer');
-  
-  // Clear any previous content in the container
-  monsterCardContainer.innerHTML = ''; 
+  monsterCardContainer.innerHTML = '';
 
-  // Check if monsterData exists
   if (monsterData) {
-    // Convert the data into a Monster instance and print info to the console
     const savedMonster = Monster.fromJSON(monsterData);
-    savedMonster.printInfo();
+    const monsterCard = createElem('div', monsterCardContainer, { id: 'monsterCard' });
+    const monsterCardImg = createElem('img', monsterCard, { id: 'monsterImg' });
+    monsterCardImg.src = savedMonster.image; // Use stored image URL
 
-    // Create the monster card element
-    const monsterCard = monsterCardContainer.appendChild(document.createElement('div'));
-    monsterCard.id = 'monsterCard';
-
-    // Create and set up the image element for the monster
-    const monsterCardImg = monsterCard.appendChild(document.createElement('img'));
-    if (savedMonster.trida === 'goblin'){
-      monsterCardImg.src = 'images/Goblin.png';
-    } else if (savedMonster.trida === 'zombie'){
-      monsterCardImg.src = 'images/Zombie.png';
-    } else if (savedMonster.trida === 'dragon'){
-      monsterCardImg.src = 'images/Dragon.png';
-    }
-    monsterCardImg.id = 'monsterImg';
-
-    // Create a container for the monster info
-    const monsterInfoDiv = monsterCard.appendChild(document.createElement('div'));
-    monsterInfoDiv.id = 'monsterInfoDiv';
-
-    // Append each piece of monster information
-    const monsterCardName = monsterInfoDiv.appendChild(document.createElement('h2'));
-    monsterCardName.innerHTML = savedMonster.name;
-    monsterCardName.className = 'monsterInfo';
-
-    const monsterCardLevel = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardLevel.innerHTML = `Level: ${savedMonster.level}`;
-    monsterCardLevel.className = 'monsterInfo';
-
-    const monsterCardClassElem = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardClassElem.innerHTML = `Class: ${savedMonster.trida}`;
-    monsterCardClassElem.className = 'monsterInfo';
-
-    const monsterCardAttack = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardAttack.innerHTML = `Attack: ${savedMonster.attack}`;
-    monsterCardAttack.className = 'monsterInfo';
-
-    const monsterCardDefense = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardDefense.innerHTML = `Defense: ${savedMonster.defense}`;
-    monsterCardDefense.className = 'monsterInfo';
-
-    const monsterCardXp = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardXp.innerHTML = `XP: ${savedMonster.xp}`;
-    monsterCardXp.className = 'monsterInfo';
-
-    const monsterCardHp = monsterInfoDiv.appendChild(document.createElement('p'));
-    monsterCardHp.innerHTML = `HP: ${savedMonster.hp}`;
-    monsterCardHp.className = 'monsterInfo';
-
+    const monsterInfoDiv = createElem('div', monsterCard, { id: 'monsterInfoDiv' });
+    createElem('h2', monsterInfoDiv, { innerHTML: savedMonster.name, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `Level: ${savedMonster.level}`, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `Class: ${savedMonster.trida}`, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `Attack: ${savedMonster.attack}`, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `Defense: ${savedMonster.defense}`, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `XP: ${savedMonster.xp}`, className: 'monsterInfo' });
+    createElem('p', monsterInfoDiv, { innerHTML: `HP: ${savedMonster.hp}`, className: 'monsterInfo' });
   } else {
-    // If there is no monster data, display a message in the monster card container
-    const errorMessage = document.createElement('h1');
-    errorMessage.className = 'errorMessage';
-    errorMessage.innerHTML = 'No monster found. Please create a monster first.';
-    monsterCardContainer.appendChild(errorMessage);
-    // Style the monster card container
+    const errorMessage = createElem('h1', monsterCardContainer, { innerHTML: 'No monster found. Please create a monster first.', className: 'errorMessage' });
     monsterCardContainer.style.display = 'flex';
     monsterCardContainer.style.justifyContent = 'center';
     monsterCardContainer.style.alignItems = 'center';
@@ -278,34 +145,28 @@ function LoadMonster() {
 function HeroAttack() {
   const heroData = JSON.parse(localStorage.getItem('hero'));
   const monsterData = JSON.parse(localStorage.getItem('monster'));
-
   if (!heroData || !monsterData) {
     alert("Both a hero and a monster must be created before fighting!");
     return;
   }
-
   const hero = Hero.fromJSON(heroData);
   const monster = Monster.fromJSON(monsterData);
-
   hero.Utok(monster);
 }
 
 function MonsterAttack() {
   const heroData = JSON.parse(localStorage.getItem('hero'));
   const monsterData = JSON.parse(localStorage.getItem('monster'));
-
   if (!heroData || !monsterData) {
     alert("Both a hero and a monster must be created before fighting!");
     return;
   }
-
   const hero = Hero.fromJSON(heroData);
   const monster = Monster.fromJSON(monsterData);
-
   monster.Utok(hero);
 }
 
-// Make functions available for HTML onload and buttons
+// Expose functions for HTML onload and buttons
 window.CreateHero = CreateHero;
 window.CreateMonster = CreateMonster;
 window.LoadHero = LoadHero;
