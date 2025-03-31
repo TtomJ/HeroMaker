@@ -21,26 +21,35 @@ class Monster{
     } 
 
     Utok(hero) {
+        const miss = Math.random() < 0.2; // 20%
+        const critical = Math.random() < 0.1; // 10%
+        if (miss) {
+          alert(`${this.name} missed the attack!`);
+          return;
+        }
+        if (critical) {
+          this.attack *= 2;
+          alert(`${this.name} landed a critical hit!`);
+        }
         let damage = this.attack - hero.defense / 2;
         if (damage < 1) {
           damage = 1;
         }
         hero.hp -= damage;
-        console.log(`${this.name} attacks ${hero.name} for ${damage} damage! Hero HP: ${hero.hp}`);
-    
-        // Check if hero is defeated and update localStorage accordingly
-        if (hero.hp <= 0) {
+        if (!hero.Nazivu()) {
           alert(`${hero.name} is defeated!`);
+          this.xp += hero.xp;
+          localStorage.setItem('monster', JSON.stringify(this));
           localStorage.removeItem('hero');
+          LoadMonster();  
         } else {
           localStorage.setItem('hero', JSON.stringify(hero));
         }
-    
-        // Optionally update the UI (assuming LoadHero is in the global scope)
-        if (typeof LoadHero === 'function') {
-          LoadHero();
-        }
+        LoadHero();
       }
+    Nazivu(){
+        return this.hp > 0;
+    }
 
 
 }

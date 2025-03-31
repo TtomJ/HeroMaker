@@ -14,28 +14,35 @@ class Hero {
       Object.assign(hero, data);
       return hero;
     }
-
-    // Method to attack a monster
     Utok(monster){
-      // Calculating damage
+      const miss = Math.random() < 0.2; // 20%
+      const critical = Math.random() < 0.1; // 10%
+      if (miss) {
+        alert(`${this.name} missed the attack!`);
+        return;
+      }
+      if (critical) {
+        this.attack *= 2;
+        alert(`${this.name} landed a critical hit!`);
+      }
       let damage = this.attack - monster.defense / 2;
       if (damage < 1) {
         damage = 1;
       }
-      // Applying damage
       monster.hp -= damage;
-      console.log(`${this.name} attacks ${monster.name} for ${damage} damage! Monster HP: ${monster.hp}`);
-
-      // Check if monster is defeated 
-      if (monster.hp <= 0) {
+      if (!monster.Nazivu()){
         alert(`${monster.name} is defeated!`);
+        this.xp += monster.xp;
+        localStorage.setItem('hero', JSON.stringify(this));
         localStorage.removeItem('monster');
+        LoadHero();
       } else {
         localStorage.setItem('monster', JSON.stringify(monster));
       }
-
-      // LoadMonster function is called to update
-        LoadMonster();
+      LoadMonster();
+    }
+    Nazivu(){
+      return this.hp > 0;
     }
   }
   
